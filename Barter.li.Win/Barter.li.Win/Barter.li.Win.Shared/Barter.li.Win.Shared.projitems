@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>a1ce4c53-d576-493f-8d68-14c363bef244</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Barter.li.Win</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="$(MSBuildThisFileDirectory)App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)BL\APIService\BarterLiApiService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BL\DataHandler\SearchDatahandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BL\Netowork\NetworkContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BL\Netowork\NetworkService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BL\Netowork\NetworkUriService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DL\BookSearchDataContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DL\DataManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\SearchResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Util\IncrementalLoadingCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Util\PropertyObservable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Util\ResponseConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\BookDataVm.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Assets\barterli_hd.png" />
+  </ItemGroup>
+</Project>

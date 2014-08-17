@@ -1,0 +1,17 @@
+*.bak
+thumbs.db
+ 
+App_Data/
+bin/
+obj/
+Bin/
+_ReSharper.*/
+tmp/
+packages/
+PerfLogs/
+repositories.config
+ 
+*.user
+*.suo
+*.Cache
+*.epz
