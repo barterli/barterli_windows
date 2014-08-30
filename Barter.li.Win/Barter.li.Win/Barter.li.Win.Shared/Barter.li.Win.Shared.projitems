@@ -15,7 +15,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)BL\APIService\BarterLiApiService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BarterliException\BarterLiApiRequestException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BL\APIService\BLiAPIService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BL\APIService\BLiAPIServiceExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BL\DataHandler\SearchDatahandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BL\Netowork\NetworkContext.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BL\Netowork\NetworkService.cs" />

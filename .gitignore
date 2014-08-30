@@ -10,7 +10,6 @@ tmp/
 packages/
 PerfLogs/
 repositories.config
-*.g.cs
 *.user
 *.suo
 *.Cache

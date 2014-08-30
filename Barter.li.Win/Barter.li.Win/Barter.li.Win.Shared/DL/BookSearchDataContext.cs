@@ -58,7 +58,7 @@ namespace Barter.li.Win.DL
             {
                 SearchResponse response = await searchDH.LoadDataAsync(latitude, longitude, pageNo);
                 HasMoreBooks(response.Search);
-                await Task.Factory.StartNew(() => StoreSearchResults(response));
+                await Task.Run(() => StoreSearchResults(response));
                 return response;
             }
             catch (Exception e)

@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Barter.li.Win.Model.SearchResponseJsonTypes;
-using Barter.li.Win.BL.APIService;
+using Barter.li.Win.BL.APIServices;
 
 namespace Barter.li.Win.BL.DataHandler
 {
@@ -28,7 +28,7 @@ namespace Barter.li.Win.BL.DataHandler
             string baseUrl = "search.json?";
             baseUrl += "per=10 &page=" + pageNo + "&longitude=" + longitude + "&latitude=" + latitude;
             networkContext.URL = baseUrl;
-            BarterLiApiService a = new BarterLiApiService();
+            BliAPIService a = new BliAPIService();
             return  a.SendRequestAsync<SearchResponse>(networkContext);
         }
 
