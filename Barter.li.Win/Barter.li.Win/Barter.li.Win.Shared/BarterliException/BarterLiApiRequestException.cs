@@ -10,13 +10,15 @@ namespace Barter.li.Win.BarterliException
         public string Message { get; private set; }
         public string URL { get; private set; }
         public ResponseAction statusCode { get; private set; }
+        public bool IsRetrying {get; private set;}
 
-        public BarterLiApiRequestException(string message, string url, ResponseAction action, bool reportToServer = false)
+        public BarterLiApiRequestException(string message, string url, ResponseAction action, bool isRetrying, bool reportToServer = false)
             : base(message)
         {
             this.Message = message;
             this.URL = url;
             this.statusCode = action;
+            this.IsRetrying = IsRetrying;
             if(reportToServer)
             {
                 LogToServer();

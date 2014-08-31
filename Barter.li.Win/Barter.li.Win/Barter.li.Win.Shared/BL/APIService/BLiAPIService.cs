@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.UI.Core;
 
 namespace Barter.li.Win.BL.APIServices
 {
@@ -34,7 +35,7 @@ namespace Barter.li.Win.BL.APIServices
         /// <param name="networkContext"></param>
         /// <param name="onDataReceived"></param>
         /// <param name="onError"></param>
-        public void SendRequest<T>(NetworkContext networkContext, Action<DataSource, T> onDataReceived, Action<Exception> onError)
+        public void SendRequest<T>(NetworkContext networkContext, CoreDispatcher dispatcher, Action<DataSource, T> onDataReceived, Action<Exception> onError)
         {
 
             if (onError == null)
@@ -46,6 +47,10 @@ namespace Barter.li.Win.BL.APIServices
             {
                 throw new ArgumentException("Parameter Can not be null", "Action<<DataSource,T> onDataReceived");
             }
+            if (dispatcher == null)
+            {
+                throw new ArgumentException("Parameter Can not be null", "CoreDispatcher dispatcher");
+            }
 
             try
             {
@@ -53,16 +58,17 @@ namespace Barter.li.Win.BL.APIServices
                 {
                     T value = Task.Run(() => SendRequestAsync<T>(networkContext)).Result;
 
-                    if (value != null)
-                    {
-                        onDataReceived(DataSource.Network, value);
-                    }
-                    else
-                    {
-                        onError(new Exception("Error occured"));
-                    }
+                    dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    onDataReceived(DataSource.Network, value));
+
                 });
             }
+
+            catch (BarterLiApiRequestException e)
+            {
+                onError(e);
+            }
+
             catch (Exception e)
             {
                 onError(e);
@@ -81,7 +87,7 @@ namespace Barter.li.Win.BL.APIServices
             string errorMessage = "";
             if (networkContext.retryCount == 0)
             {
-                throw new BarterliException.BarterLiApiRequestException(errorMessage, networkContext.URL, currentAction);
+                throw new BarterliException.BarterLiApiRequestException(errorMessage, networkContext.URL, currentAction, false);
             }
 
             T value;
@@ -104,26 +110,35 @@ namespace Barter.li.Win.BL.APIServices
 
             NetworkService ns = new NetworkService();
             HttpResponseMessage response = await ns.SendAsync(url, method, post, isSecureConnection, token);
-
             string responseString = await response.Content.ReadAsStringAsync();
+
             var isRetrying = networkContext.retryCount > 0 ? true : false;
             currentAction = GetStatus(response.StatusCode, isRetrying);
 
-            switch (currentAction)
+            if (currentAction == ResponseAction.STOP || currentAction == ResponseAction.BAD_REQUEST)
             {
-                case ResponseAction.SUCCESS:
-                    return await ResponseConverter.Deserialize<T>(responseString);                    
-                case ResponseAction.RETRY:
+                errorMessage = responseString;
+            }
+            else if (currentAction == ResponseAction.RETRY)
+            {
+                networkContext.retryCount--;
+                await SendRequestAsync<T>(networkContext);
+            }
+            else if (currentAction == ResponseAction.SUCCESS)
+            {
+                value = await ResponseConverter.Deserialize<T>(responseString);
+                if (value == null && isRetrying)
+                {
                     networkContext.retryCount--;
                     await SendRequestAsync<T>(networkContext);
-                    break;
-                case ResponseAction.STOP:
-                case ResponseAction.BAD_REQUEST:
-                    errorMessage = responseString;
-                    break;
+                }
+                else
+                {
+                    return value;
+                }
             }
-            throw new BarterLiApiRequestException(responseString, networkContext.URL, currentAction);
-            
+
+            throw new BarterLiApiRequestException(responseString, networkContext.URL, currentAction, isRetrying);
         }
 
     }
