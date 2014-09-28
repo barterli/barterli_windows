@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Barter.li.Win.DL
+namespace Barter.Li.Win.DL
 {
     /// <summary>
     /// Handle isolatedStorageSettings

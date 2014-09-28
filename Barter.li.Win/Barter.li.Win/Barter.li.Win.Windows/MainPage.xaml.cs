@@ -1,7 +1,7 @@
-﻿using Barter.li.Win.BL.DataHandler;
-using Barter.li.Win.DL;
-using Barter.li.Win.Model.SearchResponseJsonTypes;
-using Barter.li.Win.ViewModel;
+﻿using Barter.Li.Win.BL.DataHandler;
+using Barter.Li.Win.DL;
+using Barter.Li.Win.Model.SearchResponseJsonTypes;
+using Barter.Li.Win.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,7 +20,7 @@ using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace Barter.li.Win
+namespace Barter.Li.Win
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.

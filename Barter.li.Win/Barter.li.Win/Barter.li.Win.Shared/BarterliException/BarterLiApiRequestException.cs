@@ -1,13 +1,13 @@
-﻿using Barter.li.Win.BL.APIServices;
+﻿using Barter.Li.Win.BL.APIServices;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Barter.li.Win.BarterliException
+namespace Barter.Li.Win.BarterliException
 {
     public class BarterLiApiRequestException : Exception
     {
-        public string Message { get; private set; }
+        public new string Message { get; private set; }
         public string URL { get; private set; }
         public ResponseAction statusCode { get; private set; }
         public bool IsRetrying {get; private set;}

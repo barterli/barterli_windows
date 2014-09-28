@@ -8,7 +8,7 @@
   <mp:PhoneIdentity PhoneProductId="30199706-7e8a-4f8e-879c-1d92209ce0e3" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>Barter.li.Win.WindowsPhone</DisplayName>
+    <DisplayName>Barter.Li.Win.WindowsPhone</DisplayName>
     <PublisherDisplayName>Jay</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -25,12 +25,12 @@
   <Applications>
     <Application Id="App"
         Executable="$targetnametoken$.exe"
-        EntryPoint="Barter.li.Win.WindowsPhone.App">
+        EntryPoint="Barter.Li.Win.WindowsPhone.App">
         <m3:VisualElements
-            DisplayName="Barter.li.Win.WindowsPhone"
+            DisplayName="Barter.Li.Win.WindowsPhone"
             Square150x150Logo="Assets\Logo.png"
             Square44x44Logo="Assets\SmallLogo.png"
-            Description="Barter.li.Win.WindowsPhone"
+            Description="Barter.Li.Win.WindowsPhone"
             ForegroundText="light"
             BackgroundColor="transparent">
             <m3:DefaultTile Wide310x150Logo="Assets\WideLogo.png" Square71x71Logo="Assets\Square71x71Logo.png"/>

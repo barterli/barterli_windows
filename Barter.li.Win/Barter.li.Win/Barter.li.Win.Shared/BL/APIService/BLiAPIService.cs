@@ -1,102 +1,76 @@
-﻿using Barter.li.Win.BarterliException;
-using Barter.li.Win.BL.Network;
-using Barter.li.Win.Util;
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Windows.UI.Core;
-
-namespace Barter.li.Win.BL.APIServices
+﻿//----------------------------------------------------------------------------------------------
+// <copyright file="BLiAPIService.cs" company="BarterLi">
+// Copyright (c) BarterLi.  All rights reserved.
+// </copyright>
+//-------------------------------------------------------------------------------------------------
+namespace Barter.Li.Win.BL.APIServices
 {
-    public partial class BliAPIService
-    {
-        /* under dev*/
+    using System;
+    using System.Collections.Generic;
+    using System.Net;
+    using System.Net.Http;
+    using System.Text;
+    using System.Threading;
+    using System.Threading.Tasks;    
+    using Barter.Li.Win.BarterliException;
+    using Barter.Li.Win.BL.Network;
+    using Barter.Li.Win.Util;
+    using Windows.UI.Core;
 
+    /// <summary>
+    ///     API service
+    ///     Responsible for 
+    ///     handle the Request
+    ///     Find the nearest data
+    ///     respond to caller with data and data source
+    /// </summary>
+    public partial class APIService
+    {       
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="APIService" /> class.     
+        /// </summary>
+        public APIService()
+        {
+        }
+
+        /// <summary>
+        ///     Type of Source of Response
+        /// </summary>
         public enum DataSource
         {
+            /// <summary>
+            ///     Retrieved from Database or Memory
+            /// </summary>
             Cache,
+
+            /// <summary>
+            ///     From Network Response
+            /// </summary>
             Network
         }
 
         /// <summary>
-        /// Default Constructor
+        ///     Async Method for send request
         /// </summary>
-        public BliAPIService() { }
-
-        /// <summary>
-        /// SendRequest and Receive Callbacks for DataReceived/ErrorOccured
-        /// Any UI operation is suggested in Dispatcher thread as it is Background thread operatrion
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="networkContext"></param>
-        /// <param name="onDataReceived"></param>
-        /// <param name="onError"></param>
-        public void SendRequest<T>(NetworkContext networkContext, CoreDispatcher dispatcher, Action<DataSource, T> onDataReceived, Action<Exception> onError)
-        {
-
-            if (onError == null)
-            {
-                throw new ArgumentException("Parameter Can not be null", "Action<Exception> onError");
-            }
-
-            if (onDataReceived == null)
-            {
-                throw new ArgumentException("Parameter Can not be null", "Action<<DataSource,T> onDataReceived");
-            }
-            if (dispatcher == null)
-            {
-                throw new ArgumentException("Parameter Can not be null", "CoreDispatcher dispatcher");
-            }
-
-            try
-            {
-                System.Threading.Tasks.Task.Factory.StartNew(() =>
-                {
-                    T value = Task.Run(() => SendRequestAsync<T>(networkContext)).Result;
-
-                    dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                    onDataReceived(DataSource.Network, value));
-
-                });
-            }
-
-            catch (BarterLiApiRequestException e)
-            {
-                onError(e);
-            }
-
-            catch (Exception e)
-            {
-                onError(e);
-            }
-        }
-
-        /// <summary>
-        /// Async Method for send request
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="networkContext"></param>
-        /// <returns></returns>
-        public async Task<T> SendRequestAsync<T>(NetworkContext networkContext)
+        /// <typeparam name="T">Expecting Type</typeparam>
+        /// <param name="networkContext">NetworkContext with all required properties</param>
+        /// <returns>Reference of Expecting Type</returns>
+        public T SendRequestAsync<T>(NetworkContext networkContext)
         {
             ResponseAction currentAction = ResponseAction.RETRY;
-            string errorMessage = "";
-            if (networkContext.retryCount == 0)
+            string errorMessage = string.Empty;
+            if (networkContext.RetryCount == 0)
             {
                 throw new BarterliException.BarterLiApiRequestException(errorMessage, networkContext.URL, currentAction, false);
             }
 
             T value;
             string url = networkContext.URL;
-            HttpMethod method = networkContext.httpMethod;
-            string post = networkContext.post;
-            bool isSecureConnection = networkContext.isSecureConnection;
-            int retryCount = networkContext.retryCount;
-            CancellationToken token = networkContext.cancellationToken;
+            HttpMethod method = networkContext.HttpMethod;
+            string post = networkContext.Post;
+            bool isSecureConnection = networkContext.IsSecureConnection;
+            int retryCount = networkContext.RetryCount;
+            CancellationToken token = networkContext.CancellationToken;
 
             if (networkContext.Equals(null))
             {
@@ -109,10 +83,10 @@ namespace Barter.li.Win.BL.APIServices
             }
 
             NetworkService ns = new NetworkService();
-            HttpResponseMessage response = await ns.SendAsync(url, method, post, isSecureConnection, token);
-            string responseString = await response.Content.ReadAsStringAsync();
+            HttpResponseMessage response = ns.SendAsync(url, method, post, isSecureConnection, token).Result;
+            string responseString = response.Content.ReadAsStringAsync().Result;
 
-            var isRetrying = networkContext.retryCount > 0 ? true : false;
+            var isRetrying = networkContext.RetryCount > 0 ? true : false;
             currentAction = GetStatus(response.StatusCode, isRetrying);
 
             if (currentAction == ResponseAction.STOP || currentAction == ResponseAction.BAD_REQUEST)
@@ -121,16 +95,16 @@ namespace Barter.li.Win.BL.APIServices
             }
             else if (currentAction == ResponseAction.RETRY)
             {
-                networkContext.retryCount--;
-                await SendRequestAsync<T>(networkContext);
+                networkContext.RetryCount--;
+                this.SendRequestAsync<T>(networkContext);
             }
             else if (currentAction == ResponseAction.SUCCESS)
             {
-                value = await ResponseConverter.Deserialize<T>(responseString);
+                value = ResponseConverter.Deserialize<T>(responseString).Result;
                 if (value == null && isRetrying)
                 {
-                    networkContext.retryCount--;
-                    await SendRequestAsync<T>(networkContext);
+                    networkContext.RetryCount--;
+                    this.SendRequestAsync<T>(networkContext);
                 }
                 else
                 {
@@ -140,6 +114,5 @@ namespace Barter.li.Win.BL.APIServices
 
             throw new BarterLiApiRequestException(responseString, networkContext.URL, currentAction, isRetrying);
         }
-
     }
 }

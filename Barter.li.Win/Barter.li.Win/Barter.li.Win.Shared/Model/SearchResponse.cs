@@ -1,52 +1,30 @@
-﻿namespace Barter.li.Win.Model.SearchResponseJsonTypes
+﻿//----------------------------------------------------------------------------------------------
+// <copyright file="SearchResponse.cs" company="BarterLi">
+// Copyright (c) BarterLi.  All rights reserved.
+// </copyright>
+//-------------------------------------------------------------------------------------------------
+namespace Barter.Li.Win.Model.SearchResponseJsonTypes
 {
     using System;
     using System.Collections.Generic;
+    using Barter.Li.Win.Model.SearchResponseJsonTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
-    using Barter.li.Win.Model.SearchResponseJsonTypes;
 
-
-    public class Location
+    /// <summary>
+    ///     Model class SearchResponse
+    /// </summary>
+    public class SearchResponse
     {
-
-        [JsonProperty("id")]
-        public int Id { get; set; }
-
-        [JsonProperty("country")]
-        public string Country { get; set; }
-
-        [JsonProperty("state")]
-        public string State { get; set; }
-
-        [JsonProperty("city")]
-        public string City { get; set; }
-
-        [JsonProperty("locality")]
-        public object Locality { get; set; }
-
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        [JsonProperty("latitude")]
-        public string Latitude { get; set; }
-
-        [JsonProperty("longitude")]
-        public string Longitude { get; set; }
-
-        [JsonProperty("address")]
-        public string Address { get; set; }
-
-        [JsonProperty("id_location")]
-        public string IdLocation { get; set; }
-
-        [JsonProperty("foursquare_id")]
-        public string FoursquareId { get; set; }
+        [JsonProperty("search")]
+        public Search[] Search { get; set; }
     }
 
+    /// <summary>
+    ///     Model class Search
+    /// </summary>
     public class Search
     {
-
         [JsonProperty("id")]
         public int Id { get; set; }
 
@@ -100,14 +78,43 @@
 
         [JsonProperty("image_present")]
         public bool ImagePresent { get; set; }
-    }
-
-
-    public class SearchResponse
+    }    
+    /// <summary>
+    ///     Model class Location
+    /// </summary>
+    public class Location
     {
+        [JsonProperty("id")]
+        public int Id { get; set; }
 
-        [JsonProperty("search")]
-        public Search[] Search { get; set; }
+        [JsonProperty("country")]
+        public string Country { get; set; }
+
+        [JsonProperty("state")]
+        public string State { get; set; }
+
+        [JsonProperty("city")]
+        public string City { get; set; }
+
+        [JsonProperty("locality")]
+        public object Locality { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("latitude")]
+        public string Latitude { get; set; }
+
+        [JsonProperty("longitude")]
+        public string Longitude { get; set; }
+
+        [JsonProperty("address")]
+        public string Address { get; set; }
+
+        [JsonProperty("id_location")]
+        public string IdLocation { get; set; }
+
+        [JsonProperty("foursquare_id")]
+        public string FoursquareId { get; set; }
     }
-
 }

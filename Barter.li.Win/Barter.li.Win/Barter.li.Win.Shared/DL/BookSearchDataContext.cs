@@ -1,12 +1,12 @@
-﻿using Barter.li.Win.BL.DataHandler;
-using Barter.li.Win.Model.SearchResponseJsonTypes;
+﻿using Barter.Li.Win.BL.DataHandler;
+using Barter.Li.Win.Model.SearchResponseJsonTypes;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 
-namespace Barter.li.Win.DL
+namespace Barter.Li.Win.DL
 {
     public class BookSearchDataContext
     {
@@ -71,11 +71,14 @@ namespace Barter.li.Win.DL
         {
             try
             {
-                SearchResponse response = new SearchResponse();
-                Search[] searchResult;
-                searchResult = books.ToArray();
-                response.Search = searchResult;
-                return response;
+               return await Task.Run(() =>
+                {
+                    SearchResponse response = new SearchResponse();
+                    Search[] searchResult;
+                    searchResult = books.ToArray();
+                    response.Search = searchResult;
+                    return response;
+                });
             }
             catch(Exception e)
             {

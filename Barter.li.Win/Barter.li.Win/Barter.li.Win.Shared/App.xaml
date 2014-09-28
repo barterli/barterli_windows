@@ -1,7 +1,7 @@
 ﻿<Application
-    x:Class="Barter.li.Win.App"
+    x:Class="Barter.Li.Win.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Barter.li.Win">
+    xmlns:local="using:Barter.Li.Win">
 
 </Application>

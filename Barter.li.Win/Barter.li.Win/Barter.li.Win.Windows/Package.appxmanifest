@@ -6,7 +6,7 @@
             Version="1.0.0.0" />
 
   <Properties>
-    <DisplayName>Barter.li.Win.Windows</DisplayName>
+    <DisplayName>Barter.Li.Win.Windows</DisplayName>
     <PublisherDisplayName>Jay</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -23,12 +23,12 @@
   <Applications>
     <Application Id="App"
         Executable="$targetnametoken$.exe"
-        EntryPoint="Barter.li.Win.Windows.App">
+        EntryPoint="Barter.Li.Win.Windows.App">
         <m2:VisualElements
-            DisplayName="Barter.li.Win.Windows"
+            DisplayName="Barter.Li.Win.Windows"
             Square150x150Logo="Assets\Logo.png"
             Square30x30Logo="Assets\SmallLogo.png"
-            Description="Barter.li.Win.Windows"
+            Description="Barter.Li.Win.Windows"
             ForegroundText="light"
             BackgroundColor="#464646">
             <m2:SplashScreen Image="Assets\SplashScreen.png" />

@@ -16,12 +16,15 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)BarterliException\BarterLiApiRequestException.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)BL\APIService\BLiAPIService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BL\APIService\BLiAPIService.cs">
+      <ExcludeFromSourceAnalysis>True</ExcludeFromSourceAnalysis>
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)BL\APIService\BLiAPIServiceExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BL\DataHandler\SearchDatahandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BL\Netowork\NetworkContext.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BL\Netowork\NetworkService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)BL\Netowork\NetworkUriService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BL\Netowork\NetworkUriConstants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DL\BookSearchDataContext.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DL\DataManager.cs" />

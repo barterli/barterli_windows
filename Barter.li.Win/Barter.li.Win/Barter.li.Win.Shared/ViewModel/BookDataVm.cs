@@ -1,15 +1,15 @@
-﻿using Barter.li.Win.Model.SearchResponseJsonTypes;
+﻿using Barter.Li.Win.Model.SearchResponseJsonTypes;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using Barter.li.Win.DL;
+using Barter.Li.Win.DL;
 using Windows.UI.Xaml.Data;
-using Barter.li.Win.Util;
+using Barter.Li.Win.Util;
 using System.Threading;
 
-namespace Barter.li.Win.ViewModel
+namespace Barter.Li.Win.ViewModel
 {
     public class BookSummaryInfo
     {
