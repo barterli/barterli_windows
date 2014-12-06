@@ -109,7 +109,7 @@ namespace Barter.Li.Win.ViewModel
         }
     }
 
-    public class BookDataVM : PropertyObservable
+    public class BookDataVM : BaseViewModel
     {
         BookSearchDataContext data;
         bool _IsBusy;

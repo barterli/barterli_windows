@@ -29,6 +29,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)DL\BookSearchDataContext.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DL\DataManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\SearchResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Util\GPS.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\IncrementalLoadingCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\PropertyObservable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\ResponseConverter.cs" />

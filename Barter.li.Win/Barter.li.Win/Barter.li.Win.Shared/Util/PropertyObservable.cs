@@ -5,16 +5,19 @@
 //-------------------------------------------------------------------------------------------------
 namespace Barter.Li.Win.Util
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Runtime.CompilerServices;
-    using System.Text;
+    using Barter.li.Win.Util;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
+using Windows.Devices.Geolocation;
     
     /// <summary>
     /// Observable class to Notify property changed
     /// </summary>
-    public class PropertyObservable : INotifyPropertyChanged
+    public class BaseViewModel : INotifyPropertyChanged
     {
         /// <summary>
         /// Property changed event handler
@@ -34,5 +37,38 @@ namespace Barter.Li.Win.Util
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
+        private Geopoint _latestPosition;
+
+        public Geopoint latestPosition
+        {
+            get
+            {
+                return _latestPosition;
+            }
+            set
+            {
+                if (_latestPosition != value)
+                {
+                    _latestPosition = value;
+                    NotifyPropertyChanged("latestPosition");
+                }
+            }
+        }
+
+        public async Task<bool> UpdateLocation()
+        {
+            GPS gpsRef=new GPS();
+            var location=await Task.Run(()=>gpsRef.ExecuteGetCoordGPSCommand());
+            if(location!=null)
+            {
+                latestPosition=location;
+                return true;
+            }
+            return false;
+        }
+
+
+
     }
 }
