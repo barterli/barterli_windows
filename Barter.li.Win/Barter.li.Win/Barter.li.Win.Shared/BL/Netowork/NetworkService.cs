@@ -28,21 +28,30 @@ namespace Barter.Li.Win.BL.Network
         /// <param name="postBody">Post body content in case of post http method</param>
         /// <param name="isSecureConnection">flag indicating whether to use HTTP or HTTPS</param>
         /// <param name="token">Cancellation token to control network request</param>
+        /// <param name="headers">Optional - required Headers for network request</param>
         /// <returns>HttpResponseMessage return by API</returns>
-        internal async Task<HttpResponseMessage> SendAsync(string apiUrl, HttpMethod httpMethod, string postBody, bool isSecureConnection, CancellationToken token)
+        internal async Task<HttpResponseMessage> SendAsync(string apiUrl, HttpMethod httpMethod, string postBody, bool isSecureConnection, CancellationToken token, Dictionary<string, string> headers = null)
         {
             HttpClient client = new HttpClient();
             string navigationUrl = isSecureConnection ? NetworkUriConstants.BASEURLSECURE : NetworkUriConstants.BASEURL;
             navigationUrl = navigationUrl + apiUrl;
             HttpContent content = null;
-            if (httpMethod != HttpMethod.Get || httpMethod != HttpMethod.Delete)
+            HttpRequestMessage requestMessage = new HttpRequestMessage();
+            if (httpMethod == HttpMethod.Post || httpMethod == HttpMethod.Put)
             {
                 content = new StringContent(
                     postBody,
                     Encoding.UTF8,
                     NetworkUriConstants.JSONAPPTYPE);
+                requestMessage.Content = content;
             }
 
+            if (headers != null && headers.Count > 0)
+            {
+                this.SetHeaders(requestMessage, headers);
+            }
+
+            requestMessage.RequestUri = new Uri(navigationUrl);
             client.Timeout = TimeSpan.FromSeconds(10.00);
 
             HttpResponseMessage response;
@@ -50,20 +59,22 @@ namespace Barter.Li.Win.BL.Network
             {
                 if (object.Equals(httpMethod, HttpMethod.Post))
                 {
-                    response = await client.PostAsync(navigationUrl, content, token);
+                    requestMessage.Method = HttpMethod.Post;
                 }
                 else if (object.Equals(httpMethod, HttpMethod.Put))
                 {
-                    response = await client.PutAsync(navigationUrl, content, token);
+                    requestMessage.Method = HttpMethod.Put;
                 }
                 else if (object.Equals(httpMethod, HttpMethod.Delete))
                 {
-                    response = await client.DeleteAsync(navigationUrl, token);
+                    requestMessage.Method = HttpMethod.Delete;
                 }
                 else
                 {
-                    response = await client.GetAsync(navigationUrl, token);
+                    requestMessage.Method = HttpMethod.Get;
                 }
+
+                response = await client.SendAsync(requestMessage, token);
 
                 return response;
             }
@@ -74,6 +85,27 @@ namespace Barter.Li.Win.BL.Network
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+
+        /// <summary>
+        /// Set the headers in request
+        /// </summary>
+        /// <param name="requestMessage">RequestMessage object to set the headers</param>
+        /// <param name="headers">KVPair of headers to add in request message</param>
+        private void SetHeaders(HttpRequestMessage requestMessage, Dictionary<string, string> headers)
+        {
+            foreach (var header in headers)
+            {
+                ////to prevent duplicate key excption
+                ////remove the header if key is present 
+                ////and add it with new value
+                if (requestMessage.Headers.Contains(header.Key))
+                {
+                    requestMessage.Headers.Remove(header.Key);
+                }
+
+                requestMessage.Headers.Add(header.Key, header.Value);
             }
         }
     }

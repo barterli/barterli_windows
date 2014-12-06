@@ -23,12 +23,16 @@
     <Compile Include="$(MSBuildThisFileDirectory)BL\APIService\BLiAPIServiceExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BL\DataHandler\SearchDatahandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BL\Netowork\NetworkContext.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)BL\Netowork\NetworkService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BL\Netowork\NetworkService.cs"/>
     <Compile Include="$(MSBuildThisFileDirectory)BL\Netowork\NetworkUriConstants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BL\Netowork\ResponseType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DL\BookSearchDataContext.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DL\DataManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Book.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\RequestJsonTypes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\SearchResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\UserInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\IncrementalLoadingCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\PropertyObservable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\ResponseConverter.cs" />

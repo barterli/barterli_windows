@@ -25,7 +25,7 @@ namespace Barter.Li.Win.BL.Network
             this.Post = string.Empty;
             this.HttpMethod = System.Net.Http.HttpMethod.Get;
             this.IsSecureConnection = false;
-            this.RetryCount = 1;           
+            this.RetryCount = 1;       
         }
 
         /// <summary>
@@ -82,6 +82,15 @@ namespace Barter.Li.Win.BL.Network
         /// e.g API/Search/1
         /// </summary>
         internal string URL
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets Request-Id       
+        /// </summary>
+        internal int RequestId
         {
             get;
             set;

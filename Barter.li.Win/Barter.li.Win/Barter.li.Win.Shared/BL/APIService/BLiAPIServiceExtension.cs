@@ -34,6 +34,16 @@ namespace Barter.Li.Win.BL.APIServices
         /// Bad request status from APIS
         /// </summary>
         BAD_REQUEST,
+
+        /// <summary>
+        /// Status is 200 but empty data
+        /// </summary>
+        EmptyResponse,
+
+        /// <summary>
+        /// Authentication required 
+        /// </summary>
+        UnAuthorised,
     }
 
     /// <summary>
@@ -68,6 +78,10 @@ namespace Barter.Li.Win.BL.APIServices
                 {
                     return ResponseAction.RETRY;
                 }
+            }
+            else if (statusCode == HttpStatusCode.BadRequest)
+            {
+                return ResponseAction.BAD_REQUEST;
             }
 
             return ResponseAction.STOP;

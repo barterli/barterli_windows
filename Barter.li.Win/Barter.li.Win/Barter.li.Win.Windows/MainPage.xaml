@@ -23,16 +23,6 @@
         <ProgressBar IsIndeterminate="{Binding IsBusy}" VerticalAlignment="Top" Height="20" Background="Transparent" LargeChange="10" IsHitTestVisible="False" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False" IsTapEnabled="False"/>
         <GridView x:Name="GridViewBook" ItemsSource="{Binding BookCollection}" HorizontalAlignment="Left" VerticalAlignment="Stretch"
                   DataFetchSize="1" IncrementalLoadingThreshold="0" IncrementalLoadingTrigger="Edge" Margin="0,25,0,0" ItemTemplate="{StaticResource GridButtonTemplate}">
-        </GridView>
-        <!--<FlipView Background="Bisque" ItemsSource="{Binding BookCollection}" BorderBrush="Black" BorderThickness="1" Width="500" Height="300">
-            <FlipView.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Image VerticalAlignment="Top" Source="{Binding ImageUrl}" Stretch="Uniform" Height="200" Width="150"/>
-                        <TextBlock Text="{Binding Title}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Foreground="White" FontSize="22" FontFamily="Segoe WP Light" TextWrapping="WrapWholeWords"/>
-                    </Grid>
-                </DataTemplate>                
-            </FlipView.ItemTemplate>
-        </FlipView>-->
+        </GridView>      
     </Grid>
 </Page>

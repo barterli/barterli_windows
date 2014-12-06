@@ -11,11 +11,12 @@ namespace Barter.Li.Win.BL.APIServices
     using System.Net.Http;
     using System.Text;
     using System.Threading;
-    using System.Threading.Tasks;    
+    using System.Threading.Tasks;
     using Barter.Li.Win.BarterliException;
     using Barter.Li.Win.BL.Network;
     using Barter.Li.Win.Util;
     using Windows.UI.Core;
+    using Barter.li.Win.BL.Netowork;
 
     /// <summary>
     ///     API service
@@ -25,7 +26,7 @@ namespace Barter.Li.Win.BL.APIServices
     ///     respond to caller with data and data source
     /// </summary>
     public partial class APIService
-    {       
+    {
         /// <summary>
         ///     Initializes a new instance of the <see cref="APIService" /> class.     
         /// </summary>
@@ -55,7 +56,7 @@ namespace Barter.Li.Win.BL.APIServices
         /// <typeparam name="T">Expecting Type</typeparam>
         /// <param name="networkContext">NetworkContext with all required properties</param>
         /// <returns>Reference of Expecting Type</returns>
-        public T SendRequestAsync<T>(NetworkContext networkContext)
+        public ApiResponse<T> SendRequestAsync<T>(NetworkContext networkContext)
         {
             ResponseAction currentAction = ResponseAction.RETRY;
             string errorMessage = string.Empty;
@@ -64,7 +65,8 @@ namespace Barter.Li.Win.BL.APIServices
                 throw new BarterliException.BarterLiApiRequestException(errorMessage, networkContext.URL, currentAction, false);
             }
 
-            T value;
+            ApiResponse<T> apiResponse = new ApiResponse<T>() { Id = networkContext.RequestId };
+
             string url = networkContext.URL;
             HttpMethod method = networkContext.HttpMethod;
             string post = networkContext.Post;
@@ -79,7 +81,12 @@ namespace Barter.Li.Win.BL.APIServices
 
             if (string.IsNullOrWhiteSpace(url))
             {
-                throw new ArgumentException("Parameter Can not be null", "NetworkContext.URL");
+                throw new ArgumentException("Parameter Can not be null", "URL");
+            }
+
+            if (networkContext.RequestId == 0 )
+            {
+                throw new ArgumentException("Parameter must be non-zero value", "RequestId");
             }
 
             NetworkService ns = new NetworkService();
@@ -100,15 +107,15 @@ namespace Barter.Li.Win.BL.APIServices
             }
             else if (currentAction == ResponseAction.SUCCESS)
             {
-                value = ResponseConverter.Deserialize<T>(responseString).Result;
-                if (value == null && isRetrying)
+                apiResponse.value = ResponseConverter.Deserialize<T>(responseString).Result;
+                if (apiResponse == null && isRetrying)
                 {
                     networkContext.RetryCount--;
                     this.SendRequestAsync<T>(networkContext);
                 }
                 else
                 {
-                    return value;
+                    return apiResponse;
                 }
             }
 
