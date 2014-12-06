@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 
-namespace Barter.li.Win
+namespace Barter.li.Win.Shared.ViewModel
 {
     class MainPageViewModel: BaseViewModel
     {
