@@ -55,10 +55,18 @@ namespace Barter.li.Win.BL.LocationService
 
         private void Init()
         {
-            geoLocater = new Geolocator();
-            geoLocater.ReportInterval = locationUpdateInterval;
-            locationInfo = new LocationInfo();
-            geoLocater.DesiredAccuracyInMeters = locationAccuracyinMeters;
+            try
+            {
+                geoLocater = new Geolocator();
+                geoLocater.ReportInterval = locationUpdateInterval;
+                locationInfo = new LocationInfo();
+                geoLocater.DesiredAccuracy = PositionAccuracy.Default;
+                geoLocater.DesiredAccuracyInMeters = locationAccuracyinMeters;
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
 
         }
 
@@ -96,7 +104,7 @@ namespace Barter.li.Win.BL.LocationService
                 geoLocater.PositionChanged += geoLocater_PositionChanged;
             }
 
-            Geoposition tempPosition = await geoLocater.GetGeopositionAsync();
+            Geoposition tempPosition = await geoLocater.GetGeopositionAsync(new TimeSpan(0, 0, 60), new TimeSpan(0, 0, 5));
             locationInfo.Latitude = tempPosition.Coordinate.Latitude;
             locationInfo.Longitude = tempPosition.Coordinate.Longitude;
             return locationInfo;
