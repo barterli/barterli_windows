@@ -9,6 +9,7 @@ using Windows.UI.Xaml.Data;
 using Barter.Li.Win.Util;
 using System.Threading;
 using Barter.li.Win.BL.LocationService;
+using Barter.li.Win.ViewModel;
 
 namespace Barter.Li.Win.ViewModel
 {
@@ -111,7 +112,7 @@ namespace Barter.Li.Win.ViewModel
         }
     }
 
-    public class BookDataVM : PropertyObservable
+    public class BookDataVM : BaseViewModel
     {
         BookSearchDataContext data;
         bool _IsBusy;

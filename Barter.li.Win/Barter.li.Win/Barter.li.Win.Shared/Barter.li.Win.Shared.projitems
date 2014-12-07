@@ -37,6 +37,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Model\UserInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\IncrementalLoadingCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\PropertyObservable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Util\RelayCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\ResponseConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\BaseViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\BookDataVm.cs" />
