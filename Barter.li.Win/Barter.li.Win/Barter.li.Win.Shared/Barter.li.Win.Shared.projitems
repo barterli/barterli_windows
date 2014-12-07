@@ -22,8 +22,9 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)BL\APIService\BLiAPIServiceExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BL\DataHandler\SearchDatahandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BL\LocationService\GeoLocationProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BL\Netowork\NetworkContext.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)BL\Netowork\NetworkService.cs"/>
+    <Compile Include="$(MSBuildThisFileDirectory)BL\Netowork\NetworkService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BL\Netowork\NetworkUriConstants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BL\Netowork\ResponseType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BooleanToVisibilityConverter.cs" />

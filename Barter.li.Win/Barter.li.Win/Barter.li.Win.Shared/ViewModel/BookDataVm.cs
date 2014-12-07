@@ -8,6 +8,7 @@ using Barter.Li.Win.DL;
 using Windows.UI.Xaml.Data;
 using Barter.Li.Win.Util;
 using System.Threading;
+using Barter.li.Win.BL.LocationService;
 
 namespace Barter.Li.Win.ViewModel
 {
@@ -85,7 +86,8 @@ namespace Barter.Li.Win.ViewModel
             RaiseDataLoadingStatusChanged(true);
             if (_bookDataContext != null)
             {
-                SearchResponse response = await _bookDataContext.SearchBooks(12.9399408, 77.6276092, _currentpage);
+                LocationInfo location = await GeoLocationProvider.Instance.GetGeoLocation();
+                SearchResponse response = await _bookDataContext.SearchBooks(location.Latitude, location.Longitude, _currentpage);
                 _currentpage++;
                 if (response != null && response.Search != null && response.Search.Length > 0)
                 {
