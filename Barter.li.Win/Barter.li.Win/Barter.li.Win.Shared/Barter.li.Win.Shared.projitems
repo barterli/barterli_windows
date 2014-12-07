@@ -31,6 +31,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)DL\BookSearchDataContext.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DL\DataManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Book.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\GoogleApiResponse\BookVolumeInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\RequestJsonTypes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\SearchResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\UserInfo.cs" />
